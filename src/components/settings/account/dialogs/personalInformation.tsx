@@ -10,6 +10,13 @@ import useErrorToast from "@/hooks/useErrorToast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type UserAccountResponse } from "@filen/sdk/dist/types/api/v3/user/account"
 
+/**
+ * Append-only: the original entries keep their exact spelling AND their exact
+ * index. Everything from `Åland Islands` onward is newly added.
+ *
+ * The array is therefore NOT alphabetical. Sort in the view layer:
+ *   [...countries].sort((a, b) => a.localeCompare(b))
+ */
 export const countries: string[] = [
 	"Afghanistan",
 	"Albania",
@@ -207,8 +214,125 @@ export const countries: string[] = [
 	"Vietnam",
 	"Yemen",
 	"Zambia",
-	"Zimbabwe"
+	"Zimbabwe",
+
+	// ---- added: ISO 3166-1 territories not previously covered ----
+	"Åland Islands",
+	"American Samoa",
+	"Anguilla",
+	"Antarctica",
+	"Aruba",
+	"Bermuda",
+	"Bonaire, Sint Eustatius and Saba",
+	"Bouvet Island",
+	"British Indian Ocean Territory",
+	"British Virgin Islands",
+	"Cayman Islands",
+	"Christmas Island",
+	"Cocos (Keeling) Islands",
+	"Cook Islands",
+	"Curaçao",
+	"Falkland Islands",
+	"Faroe Islands",
+	"French Guiana",
+	"French Polynesia",
+	"French Southern Territories",
+	"Gibraltar",
+	"Greenland",
+	"Guadeloupe",
+	"Guam",
+	"Guernsey",
+	"Heard Island and McDonald Islands",
+	"Hong Kong",
+	"Isle of Man",
+	"Jersey",
+	"Macao",
+	"Martinique",
+	"Mayotte",
+	"Montserrat",
+	"New Caledonia",
+	"Niue",
+	"Norfolk Island",
+	"Northern Mariana Islands",
+	"Pitcairn Islands",
+	"Puerto Rico",
+	"Réunion",
+	"Saint Barthélemy",
+	"Saint Helena, Ascension and Tristan da Cunha",
+	"Saint Martin",
+	"Saint Pierre and Miquelon",
+	"Sint Maarten",
+	"South Georgia and the South Sandwich Islands",
+	"Svalbard and Jan Mayen",
+	"Tokelau",
+	"Turks and Caicos Islands",
+	"United States Minor Outlying Islands",
+	"U.S. Virgin Islands",
+	"Wallis and Futuna",
+	"Western Sahara"
 ]
+
+/** Dependent territories and special-status areas included in `countries`. */
+export const territories: ReadonlySet<string> = new Set([
+	"Åland Islands",
+	"American Samoa",
+	"Anguilla",
+	"Antarctica",
+	"Aruba",
+	"Bermuda",
+	"Bonaire, Sint Eustatius and Saba",
+	"Bouvet Island",
+	"British Indian Ocean Territory",
+	"British Virgin Islands",
+	"Cayman Islands",
+	"Christmas Island",
+	"Cocos (Keeling) Islands",
+	"Cook Islands",
+	"Curaçao",
+	"Falkland Islands",
+	"Faroe Islands",
+	"French Guiana",
+	"French Polynesia",
+	"French Southern Territories",
+	"Gibraltar",
+	"Greenland",
+	"Guadeloupe",
+	"Guam",
+	"Guernsey",
+	"Heard Island and McDonald Islands",
+	"Hong Kong",
+	"Isle of Man",
+	"Jersey",
+	"Macao",
+	"Martinique",
+	"Mayotte",
+	"Montserrat",
+	"New Caledonia",
+	"Niue",
+	"Norfolk Island",
+	"Northern Mariana Islands",
+	"Pitcairn Islands",
+	"Puerto Rico",
+	"Réunion",
+	"Saint Barthélemy",
+	"Saint Helena, Ascension and Tristan da Cunha",
+	"Saint Martin",
+	"Saint Pierre and Miquelon",
+	"Sint Maarten",
+	"South Georgia and the South Sandwich Islands",
+	"Svalbard and Jan Mayen",
+	"Tokelau",
+	"Turks and Caicos Islands",
+	"United States Minor Outlying Islands",
+	"U.S. Virgin Islands",
+	"Wallis and Futuna",
+	"Western Sahara"
+])
+
+/**
+ * The previous contents of this file — same names, same order.
+ */
+export const sovereignCountries: string[] = countries.filter(c => !territories.has(c))
 
 export const ChangePersonalInformationDialog = memo(({ account }: { account: UserAccountResponse }) => {
 	const [open, setOpen] = useState<boolean>(false)
